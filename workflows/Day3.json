@@ -1,0 +1,90 @@
+{
+  "name": "Webhook+http_req",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "signup-hook",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d025c920-00e3-4153-9c8f-54525c8e8f91",
+      "name": "Webhook",
+      "webhookId": "74aac809-ff7f-4764-b06b-18b4f0f1cdca"
+    },
+    {
+      "parameters": {
+        "url": "https://jsonplaceholder.typicode.com/users/1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "d3f6dc10-e7c6-4eee-846b-887323736ccd",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"first_user\": \"{{ $('Webhook').item.json.body.users[0].email.trim().toLowerCase() }}\",\n  \"first_user_name\": \"{{ $('Webhook').item.json.body.users[0].name.trim() }}\",\n  \"second_user\": \"{{ $('Webhook').item.json.body.users[1].email.trim().toLowerCase() }}\",\n  \"second_user_name\": \"{{ $('Webhook').item.json.body.users[1].name.trim() }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "2fd31abc-1b1f-4004-83f6-5a3f8ae0ca6d",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "ec2d51ff-5148-4171-9f14-8e7fe1afe138",
+  "meta": {
+    "instanceId": "b8748e191e4cae71eff96b21cc05900fad2a403e3cd52d93369e3ba538cc547f"
+  },
+  "nodeGroups": [],
+  "id": "wcY8eu4kxEqH2kPS",
+  "tags": []
+}
