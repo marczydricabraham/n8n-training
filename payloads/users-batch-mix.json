@@ -1,0 +1,8 @@
+{
+  "users": [
+    { "name": "Alice Johnson", "email": "ALICE.JOHNSON@Corporation.com" },
+    { "name": "Bob Martin", "email": " bob@example.com " },
+    { "name": "Carol Reyes", "email": "carol@corporation.com" },
+    { "name": "Danilo Cruz", "email": " danilo@outlook.com " }
+  ]
+}
