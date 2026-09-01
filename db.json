@@ -1,0 +1,86 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Alice Johnson",
+      "email": "  ALICE.JOHNSON@Corporation.com "
+    },
+    {
+      "id": "2",
+      "name": "Bob Martin",
+      "email": " bob@example.com "
+    },
+    {
+      "id": "3",
+      "name": "Carol Reyes",
+      "email": "carol@corporation.com"
+    },
+    {
+      "id": "4",
+      "name": "Danilo Cruz",
+      "email": " danilo@outlook.com "
+    }
+  ],
+  "crm": [
+    {
+      "id": "1",
+      "clean_email": "alice.johnson@corporation.com",
+      "received_at": "2026-08-26T04:56:42.135Z"
+    },
+    {
+      "id": "2",
+      "clean_email": "alice.johnson@corporation.com",
+      "received_at": "2026-08-26T04:57:01.393Z"
+    },
+    {
+      "id": "3",
+      "clean_email": "alice.johnson@corporation.com",
+      "received_at": "2026-08-26T04:57:11.236Z"
+    },
+    {
+      "id": "4",
+      "clean_email": "carol@corporation.com",
+      "received_at": "2026-08-26T05:06:51.523Z"
+    },
+    {
+      "id": "5",
+      "clean_email": "alice.johnson@corporation.com",
+      "received_at": "2026-08-26T05:06:51.526Z"
+    }
+  ],
+  "analytics": [
+    {
+      "id": "1",
+      "received_at": "2026-08-26T04:56:53.467Z"
+    },
+    {
+      "id": "2",
+      "received_at": "2026-08-26T04:57:11.243Z"
+    },
+    {
+      "id": "3",
+      "clean_email": "bob@example.com",
+      "received_at": "2026-08-26T05:01:38.458Z"
+    },
+    {
+      "id": "4",
+      "clean_email": "danilo@outlook.com",
+      "received_at": "2026-08-26T05:06:51.536Z"
+    },
+    {
+      "id": "5",
+      "clean_email": "bob@example.com",
+      "received_at": "2026-08-26T05:06:51.537Z"
+    },
+    {
+      "id": "6",
+      "clean_email": "bob@example.com",
+      "received_at": "2026-08-26T06:08:54.831Z"
+    },
+    {
+      "id": "7",
+      "clean_email": "danilo@outlook.com",
+      "received_at": "2026-08-26T06:08:54.834Z"
+    }
+  ]
+}
