@@ -1,0 +1,69 @@
+{
+  "name": "Webhook+http_req",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "signup-hook",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d025c920-00e3-4153-9c8f-54525c8e8f91",
+      "name": "Webhook",
+      "webhookId": "74aac809-ff7f-4764-b06b-18b4f0f1cdca"
+    },
+    {
+      "parameters": {
+        "url": "https://jsonplaceholder.typicode.com/users/1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "d3f6dc10-e7c6-4eee-846b-887323736ccd",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "2c94e18b-3e85-4ade-a8c8-a87882f2d930",
+  "meta": {
+    "instanceId": "b8748e191e4cae71eff96b21cc05900fad2a403e3cd52d93369e3ba538cc547f"
+  },
+  "nodeGroups": [],
+  "id": "wcY8eu4kxEqH2kPS",
+  "tags": []
+}
