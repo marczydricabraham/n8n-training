@@ -1,0 +1,29 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_ENV=production
+      - GENERIC_TIMEZONE=Asia/Manila
+      - TZ=Asia/Manila
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./workflows:/workflows
+
+  mock-api:
+    image: node:22-alpine
+    restart: unless-stopped
+    working_dir: /data
+    volumes:
+      - ./db.json:/data/db.json
+    ports:
+      - "3001:3001"
+    command: npx json-server@0.17.4 --watch db.json --port 3001
+
+volumes:
+  n8n_data:
