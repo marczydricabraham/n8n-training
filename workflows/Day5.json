@@ -1,0 +1,237 @@
+{
+  "name": "n8n_hands_on",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "signup-hook",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d025c920-00e3-4153-9c8f-54525c8e8f91",
+      "name": "Webhook",
+      "webhookId": "74aac809-ff7f-4764-b06b-18b4f0f1cdca"
+    },
+    {
+      "parameters": {
+        "url": "https://jsonplaceholder.typicode.com/users/1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        192,
+        -176
+      ],
+      "id": "d3f6dc10-e7c6-4eee-846b-887323736ccd",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a0405fd1-5f98-4c39-8e7a-e57433285236",
+              "name": "clean_email",
+              "value": "={{ $json['body.users'].email.trim().toLowerCase() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "2fd31abc-1b1f-4004-83f6-5a3f8ae0ca6d",
+      "name": "data_transformation"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "body.users",
+        "include": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "d765ac09-3587-4141-ac3c-f0adea69377e",
+      "name": "Split Out",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:3001/crm",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "clean_email",
+              "value": "={{ $json.clean_email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1024,
+        -112
+      ],
+      "id": "4152f8b0-a467-4888-ad37-f6d61780a1a0",
+      "name": "to_crm"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:3001/analytics",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "clean_email",
+              "value": "={{ $json.clean_email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        992,
+        64
+      ],
+      "id": "f10753d6-0c94-4f47-93cb-aeb219a41dc6",
+      "name": "to_analyrics"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.clean_email }}",
+                    "rightValue": "@corporation.com",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "9252dec2-bf64-47ba-bdbf-4ced43d0c580"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        0
+      ],
+      "id": "3009bdbb-7682-4e14-835f-5751c889bf45",
+      "name": "If_else"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        []
+      ]
+    },
+    "data_transformation": {
+      "main": [
+        [
+          {
+            "node": "If_else",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "data_transformation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If_else": {
+      "main": [
+        [
+          {
+            "node": "to_crm",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "to_analyrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "e1afabd9-fc0d-4061-8ce8-54f918e407e7",
+  "meta": {
+    "instanceId": "b8748e191e4cae71eff96b21cc05900fad2a403e3cd52d93369e3ba538cc547f"
+  },
+  "nodeGroups": [],
+  "id": "wcY8eu4kxEqH2kPS",
+  "tags": []
+}
