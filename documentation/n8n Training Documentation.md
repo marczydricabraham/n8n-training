@@ -118,12 +118,13 @@ The system processes incoming payload arrays and persists transformed records to
 * **Array Splitting & Item-by-Item Processing:** Uses the `Split Out` node (`body.users`) to break batch JSON arrays into individual item executions.
 * **Expression-Based Data Sanitization:** Leverages JS expression syntax (`.trim().toLowerCase()`) inside Set nodes to format incoming email attributes.
 * **Conditional Switch Logic:** Employs rule-based string matching (`contains @corporation.com`) with fallback outputs to separate CRM and Analytics targets.
+* **Error Handling & Resiliency:** Configures **Retry On Fail** across destination HTTP Request nodes set to **3 max retries** with a **1000ms wait time between tries** to ensure reliable payload delivery against intermittent endpoint failures.
 * **Container Cross-Communication:** Configures `host.docker.internal` host bindings for n8n to communicate smoothly with the local Mock API container.
-
 ## Output & usage notes
 
 * Corporate signups containing `@corporation.com` are stored at `http://localhost:3001/crm`.
 * Non-corporate signups are captured at `http://localhost:3001/analytics`.
+* Destination HTTP endpoints utilize automated retry settings (3 retries with 1000ms delay) to prevent dropped data on connection timeouts or temporary network glitches.
 * *Note:* Activate the workflow in n8n or click "Listen for test event" on the Webhook node before sending test payloads.
 
 ## Getting started
